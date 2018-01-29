@@ -31,19 +31,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 UIApplication.shared.registerForRemoteNotifications()
             }
         }
+    }
 
-        func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-            // 1. Convert device token to string
-            let tokenParts = deviceToken.map { data -> String in
-                return String(format: "%02.2hhx", data)
-            }
-            let token = tokenParts.joined()
-            // 2. Print device token to use for PNs payloads
-            print("Device Token: \(token)")
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        // 1. Convert device token to string
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
         }
-        func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-            // 1. Print out error if PNs registration not successful
-            print("Failed to register for remote notifications with error: \(error)")
-        }
+        let token = tokenParts.joined()
+        // 2. Print device token to use for PNs payloads
+        print("Device Token: \(token)")
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        // 1. Print out error if PNs registration not successful
+        print("Failed to register for remote notifications with error: \(error)")
     }
 }
