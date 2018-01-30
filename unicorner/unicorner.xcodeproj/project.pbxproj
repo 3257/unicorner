@@ -12,7 +12,33 @@
 		2642F6AB201238D2009B6510 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2642F6A9201238D2009B6510 /* Main.storyboard */; };
 		2642F6AD201238D2009B6510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2642F6AC201238D2009B6510 /* Assets.xcassets */; };
 		2642F6B0201238D2009B6510 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2642F6AE201238D2009B6510 /* LaunchScreen.storyboard */; };
+		26960B0A2020D567002C4A3E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26960B092020D567002C4A3E /* NotificationService.swift */; };
+		26960B0E2020D567002C4A3E /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 26960B072020D567002C4A3E /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		26960B0C2020D567002C4A3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2642F69A201238D2009B6510 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 26960B062020D567002C4A3E;
+			remoteInfo = NotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		26960B122020D567002C4A3E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				26960B0E2020D567002C4A3E /* NotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2642F6A2201238D2009B6510 /* unicorner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = unicorner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -23,10 +49,20 @@
 		2642F6AF201238D2009B6510 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2642F6B1201238D2009B6510 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2642F6B7201238FB009B6510 /* unicorner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = unicorner.entitlements; sourceTree = "<group>"; };
+		26960B072020D567002C4A3E /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		26960B092020D567002C4A3E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		26960B0B2020D567002C4A3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2642F69F201238D2009B6510 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26960B042020D567002C4A3E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				2642F6A4201238D2009B6510 /* unicorner */,
+				26960B082020D567002C4A3E /* NotificationService */,
 				2642F6A3201238D2009B6510 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				2642F6A2201238D2009B6510 /* unicorner.app */,
+				26960B072020D567002C4A3E /* NotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,6 +104,15 @@
 			path = unicorner;
 			sourceTree = "<group>";
 		};
+		26960B082020D567002C4A3E /* NotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				26960B092020D567002C4A3E /* NotificationService.swift */,
+				26960B0B2020D567002C4A3E /* Info.plist */,
+			);
+			path = NotificationService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -76,15 +123,34 @@
 				2642F69E201238D2009B6510 /* Sources */,
 				2642F69F201238D2009B6510 /* Frameworks */,
 				2642F6A0201238D2009B6510 /* Resources */,
+				26960B122020D567002C4A3E /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				26960B0D2020D567002C4A3E /* PBXTargetDependency */,
 			);
 			name = unicorner;
 			productName = unicorner;
 			productReference = 2642F6A2201238D2009B6510 /* unicorner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		26960B062020D567002C4A3E /* NotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26960B112020D567002C4A3E /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildPhases = (
+				26960B032020D567002C4A3E /* Sources */,
+				26960B042020D567002C4A3E /* Frameworks */,
+				26960B052020D567002C4A3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationService;
+			productName = NotificationService;
+			productReference = 26960B072020D567002C4A3E /* NotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -105,6 +171,10 @@
 							};
 						};
 					};
+					26960B062020D567002C4A3E = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 2642F69D201238D2009B6510 /* Build configuration list for PBXProject "unicorner" */;
@@ -121,6 +191,7 @@
 			projectRoot = "";
 			targets = (
 				2642F6A1201238D2009B6510 /* unicorner */,
+				26960B062020D567002C4A3E /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
@@ -136,6 +207,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		26960B052020D567002C4A3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -148,7 +226,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		26960B032020D567002C4A3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26960B0A2020D567002C4A3E /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		26960B0D2020D567002C4A3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 26960B062020D567002C4A3E /* NotificationService */;
+			targetProxy = 26960B0C2020D567002C4A3E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2642F6A9201238D2009B6510 /* Main.storyboard */ = {
@@ -280,6 +374,7 @@
 		2642F6B5201238D2009B6510 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = unicorner/unicorner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -296,6 +391,7 @@
 		2642F6B6201238D2009B6510 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = unicorner/unicorner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -304,6 +400,36 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.centroida.unicorner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		26960B0F2020D567002C4A3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = E5C2GPDY2X;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.centroida.unicorner.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		26960B102020D567002C4A3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = E5C2GPDY2X;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.centroida.unicorner.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -326,6 +452,15 @@
 			buildConfigurations = (
 				2642F6B5201238D2009B6510 /* Debug */,
 				2642F6B6201238D2009B6510 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26960B112020D567002C4A3E /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26960B0F2020D567002C4A3E /* Debug */,
+				26960B102020D567002C4A3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
