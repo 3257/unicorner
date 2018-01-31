@@ -17,14 +17,16 @@ class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
-        guard let bestAttemptContent = bestAttemptContent, // 1. make sure bestAttemptContent is not nil
-            let apsData = bestAttemptContent.userInfo["aps"] as? [String: Any], // 2. dig in the payload to get the
-            let attachmentURLAsString = apsData["attachment-url"] as? String, // 3. the attachment-url
-            let attachmentURL = URL(string: attachmentURLAsString) else { // 4. and parse it to URL object
+        guard let bestAttemptContent = bestAttemptContent, // 1. Make sure bestAttemptContent is not nil
+            let apsData = bestAttemptContent.userInfo["aps"] as? [String: Any], // 2. Dig in the payload to get the
+            let attachmentURLAsString = apsData["attachment-url"] as? String, // 3. The attachment-url
+            let attachmentURL = URL(string: attachmentURLAsString) else { // 4. And parse it to URL
                 return
         }
-        downloadWithURL(url: attachmentURL) { (complete) in
-            if complete {
+        // 5. Download the image and pass it to attachments if not nil
+        downloadImageFrom(url: attachmentURL) { (attachment) in
+            if attachment != nil {
+                bestAttemptContent.attachments = [attachment!]
                 contentHandler(bestAttemptContent)
             }
         }
@@ -39,14 +41,19 @@ class NotificationService: UNNotificationServiceExtension {
     }
 }
 
-
 // MARK: - Helper Functions
 extension NotificationService {
-    private func downloadWithURL(url: URL, completion: @escaping (Bool) -> Void) {
+
+    /// Use this function to download an image and present it in a notification
+    ///
+    /// - Parameters:
+    ///   - url: the url of the picture
+    ///   - completion: return the image in the form of UNNotificationAttachment to be added to the bestAttemptContent attachments eventually
+    private func downloadImageFrom(url: URL, with completionHandler: @escaping (UNNotificationAttachment?) -> Void) {
         let task = URLSession.shared.downloadTask(with: url) { (downloadedUrl, response, error) in
             // 1. Test URL and escape if URL not OK
             guard let downloadedUrl = downloadedUrl else {
-                completion(false)
+                completionHandler(nil)
                 return
             }
 
@@ -59,17 +66,13 @@ extension NotificationService {
             // 4. Move downloadedUrl to newly created urlPath
             try? FileManager.default.moveItem(at: downloadedUrl, to: urlPath)
 
-            // 5. Try adding the attachment to notification attachments
+            // 5. Try adding getting the attachment and pass it to the completion handler
             do {
                 let attachment = try UNNotificationAttachment(identifier: "picture", url: urlPath, options: nil)
-                
-                self.bestAttemptContent?.attachments = [attachment]
-                completion(true)
-                
+                completionHandler(attachment)
             }
             catch {
-                completion(true)
-
+                completionHandler(nil)
             }
         }
         task.resume()
