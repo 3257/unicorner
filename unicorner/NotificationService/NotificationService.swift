@@ -23,16 +23,11 @@ class NotificationService: UNNotificationServiceExtension {
             let attachmentURL = URL(string: attachmentURLAsString) else { // 4. and parse it to URL object
                 return
         }
-
-        do {
-            let imageData = try Data(contentsOf: attachmentURL) // 5. Try converting to imageData
-            if let attachment = saveImageDataToDisk(imageFileIdentifier: "image.jpg", data: imageData) {
-                bestAttemptContent.attachments = [attachment]
+        downloadWithURL(url: attachmentURL) { (complete) in
+            if complete {
+                contentHandler(bestAttemptContent)
             }
-        } catch {
-            print("Image data not initialized properly")
         }
-        contentHandler(bestAttemptContent)
     }
     
     override func serviceExtensionTimeWillExpire() {
@@ -47,26 +42,36 @@ class NotificationService: UNNotificationServiceExtension {
 
 // MARK: - Helper Functions
 extension NotificationService {
-    func saveImageDataToDisk(imageFileIdentifier: String, data: Data) -> UNNotificationAttachment? {
+    private func downloadWithURL(url: URL, completion: @escaping (Bool) -> Void) {
+        let task = URLSession.shared.downloadTask(with: url) { (downloadedUrl, response, error) in
+            // 1. Test URL and escape if URL not OK
+            guard let downloadedUrl = downloadedUrl else {
+                completion(false)
+                return
+            }
 
-        let tmpSubFolderName = ProcessInfo.processInfo.globallyUniqueString
-        let fileURLPath = URL(fileURLWithPath: NSTemporaryDirectory())
-        let tmpSubFolderURL = fileURLPath.appendingPathComponent(tmpSubFolderName, isDirectory: true)
-        let fileURL = tmpSubFolderURL.appendingPathComponent(imageFileIdentifier)
+            // 2. Get current's user temporary directory path
+            var urlPath = URL(fileURLWithPath: NSTemporaryDirectory())
+            // 3. Add proper ending to url path, in the case .jpg (The system validates the content of attached files before scheduling the corresponding notification request. If an attached file is corrupted, invalid, or of an unsupported file type, the notification request is not scheduled for delivery. )
+            let uniqueURLEnding = ProcessInfo.processInfo.globallyUniqueString + ".jpg"
+            urlPath = urlPath.appendingPathComponent(uniqueURLEnding)
 
-        do {
-            try FileManager.default.createDirectory(at: tmpSubFolderURL,
-                                            withIntermediateDirectories: true,
-                                            attributes: nil)
+            // 4. Move downloadedUrl to newly created urlPath
+            try? FileManager.default.moveItem(at: downloadedUrl, to: urlPath)
 
-            try data.write(to: fileURL, options: [])
-            let imageAttachment = try UNNotificationAttachment.init(identifier: imageFileIdentifier,
-                                                                    url: fileURL,
-                                                                    options: nil)
-            return imageAttachment
-        } catch let error {
-            print("error \(error)")
+            // 5. Try adding the attachment to notification attachments
+            do {
+                let attachment = try UNNotificationAttachment(identifier: "picture", url: urlPath, options: nil)
+                
+                self.bestAttemptContent?.attachments = [attachment]
+                completion(true)
+                
+            }
+            catch {
+                completion(true)
+
+            }
         }
-        return nil
+        task.resume()
     }
 }
